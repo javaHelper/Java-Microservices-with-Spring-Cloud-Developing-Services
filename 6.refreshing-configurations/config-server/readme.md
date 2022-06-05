@@ -1,6 +1,14 @@
-# Centralized Configuration using github
+# Refreshing Configurations
 
-GET -> `http://localhost:8888/s1rates/default/main`
+CURL
+
+```sh
+curl --location --request GET 'http://localhost:8888/s1rates/default/main' \
+--header 'Authorization: Basic cHJhdGVlazpwcmF0ZWVr' \
+--header 'Cookie: JSESSIONID=478DA3869AC127A8DBC6A86B025D8BB4'
+```
+
+Response - 
 
 ```json
 {
@@ -9,164 +17,32 @@ GET -> `http://localhost:8888/s1rates/default/main`
         "default"
     ],
     "label": "main",
-    "version": "29ab92d02e1e4aed70efe8eaee73472747797235",
+    "version": "f1b7f6ac9109f3a74212156bfa854f238be5540e",
     "state": null,
     "propertySources": [
         {
-            "name": "https://github.com/javaHelper/pluralsight-spring-cloudconfig-wa-tolls/station1/s1rates.properties",
+            "name": "https://github.com/rseroter/pluralsight-spring-cloudconfig-wa-tolls-2/station1/s1rates.properties",
             "source": {
-                "rate": "1.91",
+                "rate": "2.91",
                 "lanecount": "1"
             }
         },
         {
-            "name": "https://github.com/javaHelper/pluralsight-spring-cloudconfig-wa-tolls/s1rates.properties",
-            "source": {
-                "rate": "1.91",
-                "lanecount": "1"
-            }
-        },
-        {
-            "name": "https://github.com/javaHelper/pluralsight-spring-cloudconfig-wa-tolls/application.properties",
+            "name": "https://github.com/rseroter/pluralsight-spring-cloudconfig-wa-tolls-2/application.properties",
             "source": {
                 "rate": "1.55",
                 "tollstart": "05:00",
                 "tollstop": "22:00",
                 "lanecount": "0",
-                "invalid.connstring": "<n/a>"
+                "connstring": "{cipher}5eeefc741591596005ddd38168830ea5001d082a470e1d1dbc2e9634c7f8453221230fc135819b077de8df37040facc9c9b294d5ffdb05c7170484159e69f9d1bdad70c7768635df1a1d8f67fa57ed1e"
             }
         }
     ]
 }
 ```
 
-GET -> `http://localhost:8888/s2rates/default/main`
+GET -> `http://localhost:8080/actuator/refresh`
 
-```json
-{
-    "name": "s2rates",
-    "profiles": [
-        "default"
-    ],
-    "label": "main",
-    "version": "0b09e2f2ca026806afd9ab1c86114ad032fa0d79",
-    "state": null,
-    "propertySources": [
-        {
-            "name": "https://github.com/javaHelper/pluralsight-spring-cloudconfig-wa-tolls/station2/s2rates.properties",
-            "source": {
-                "rate": "1.65",
-                "lanecount": "3"
-            }
-        },
-        {
-            "name": "https://github.com/javaHelper/pluralsight-spring-cloudconfig-wa-tolls/application.properties",
-            "source": {
-                "rate": "1.55",
-                "tollstart": "05:00",
-                "tollstop": "22:00",
-                "lanecount": "0",
-                "invalid.connstring": "<n/a>"
-            }
-        }
-    ]
-}
-```
-----------------
-- After adding more granular paths for perf
+<img width="910" alt="Screenshot 2022-06-05 at 1 15 42 PM" src="https://user-images.githubusercontent.com/54174687/172040831-d3d7de57-a962-4df7-8bfd-febef7254bb2.png">
 
-application.yml
 
-```yml
-server:
-  port: 8888
-
-#spring:
-#  cloud:
-#    config:
-#      server:
-#        git:
-#          uri: https://github.com/javaHelper/pluralsight-spring-cloudconfig-wa-tolls
-#          default-label: main
-#          search-paths:
-#            - station*
-
-spring:
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/rseroter/pluralsight-spring-cloudconfig-wa-tolls-2
-          search-paths:
-            - station*
-          repos:
-            perf:
-              pattern: '*/perf'
-              uri: https://github.com/rseroter/pluralsight-spring-cloudconfig-wa-tolls-perf-2
-              search-paths:
-                - 'station*'
-```
-
-GET -> `http://localhost:8888/s1rates/perf/main`
-
-```json
-{
-    "name": "s1rates",
-    "profiles": [
-        "perf"
-    ],
-    "label": "main",
-    "version": "e9ede2065766443f11b7331d5e6a482b04f38746",
-    "state": null,
-    "propertySources": [
-        {
-            "name": "https://github.com/rseroter/pluralsight-spring-cloudconfig-wa-tolls-perf-2/station1/s1rates.properties",
-            "source": {
-                "rate": "5",
-                "lanecount": "5"
-            }
-        },
-        {
-            "name": "https://github.com/rseroter/pluralsight-spring-cloudconfig-wa-tolls-perf-2/application.properties",
-            "source": {
-                "rate": "1.55",
-                "tollstart": "05:00",
-                "tollstop": "22:00",
-                "lanecount": "0"
-            }
-        }
-    ]
-}
-```
-
-GET -> http://localhost:8888/s3rates/perf/main
-
-```json
-{
-    "name": "s3rates",
-    "profiles": [
-        "perf"
-    ],
-    "label": "main",
-    "version": "e9ede2065766443f11b7331d5e6a482b04f38746",
-    "state": null,
-    "propertySources": [
-        {
-            "name": "https://github.com/rseroter/pluralsight-spring-cloudconfig-wa-tolls-perf-2/station3/s3rates.properties",
-            "source": {
-                "rate": "9.10",
-                "lanecount": "8"
-            }
-        },
-        {
-            "name": "https://github.com/rseroter/pluralsight-spring-cloudconfig-wa-tolls-perf-2/application.properties",
-            "source": {
-                "rate": "1.55",
-                "tollstart": "05:00",
-                "tollstop": "22:00",
-                "lanecount": "0"
-            }
-        }
-    ]
-}
-```
