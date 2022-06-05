@@ -2,6 +2,9 @@
 
 CURL
 
+<img width="856" alt="Screenshot 2022-06-05 at 11 44 06 AM" src="https://user-images.githubusercontent.com/54174687/172037927-a181daac-1c1e-4219-8e98-e19eec1d0ed5.png">
+
+
 ```sh
 curl --location --request GET 'http://localhost:8888/s1rates/default/main' \
 --header 'Authorization: Basic cHJhdGVlazpwcmF0ZWVr' \
